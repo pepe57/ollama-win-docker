@@ -2,8 +2,7 @@
 
 EXPOSE 11434
 
-ENV OLLAMA_HOST=0.0.0.0
-ENV OLLAMA_MODELS='C:\models'
+ENV OLLAMA_HOST=0.0.0.0 OLLAMA_MODELS='C:\models'
 
 COPY ./nvdll/* C:/Windows/
 COPY ./ollama-windows-amd64 C:/app
