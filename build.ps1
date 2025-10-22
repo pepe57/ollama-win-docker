@@ -4,6 +4,7 @@
 Expand-Archive -Path .\ollama-windows-amd64.zip -DestinationPath .\build\ollama-windows-amd64
 
 
+
 # Build ltsc2022
 
 if ($env:GH_CI_LATEST -eq "true") {
@@ -11,6 +12,15 @@ if ($env:GH_CI_LATEST -eq "true") {
 } else {
     docker build --isolation hyperv --no-cache --pull -t eisai/ollama:$env:GH_CI_TAG .\build
 }
+
+# Push
+if ($env:GH_CI_PUSH -eq "true") {
+    docker push eisai/ollama -a
+}
+
+# Clean up
+docker system prune --all -f
+
 
 
 # Build ltsc2025
@@ -24,9 +34,7 @@ if ($env:GH_CI_LATEST -eq "true") {
     docker build --isolation hyperv --no-cache --pull -t eisai/ollama:$env:GH_CI_TAG-ltsc2025 .\build
 }
 
-
 # Push
-
 if ($env:GH_CI_PUSH -eq "true") {
     docker push eisai/ollama -a
 }
